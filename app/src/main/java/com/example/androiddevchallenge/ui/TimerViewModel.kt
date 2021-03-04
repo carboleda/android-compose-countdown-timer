@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.androiddevchallenge.util.Timer
 
-class TimerViewModel(private val timer: Timer) : ViewModel() {
+class TimerViewModel : ViewModel() {
+    private val timer = Timer()
     private val _leftTime = MutableLiveData(0L)
     val leftTime: LiveData<Long> = _leftTime
 
