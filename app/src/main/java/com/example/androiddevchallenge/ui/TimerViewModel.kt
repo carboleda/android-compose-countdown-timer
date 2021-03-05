@@ -7,8 +7,8 @@ import com.example.androiddevchallenge.util.Timer
 
 class TimerViewModel : ViewModel() {
     private val timer = Timer()
-    private val _leftTime = MutableLiveData(0L)
-    val leftTime: LiveData<Long> = _leftTime
+    private val _leftTime = MutableLiveData(Timer.Units())
+    val leftTime: LiveData<Timer.Units> = _leftTime
 
     fun start(time: Long) {
         timer.start(time) {
