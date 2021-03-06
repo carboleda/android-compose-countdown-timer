@@ -5,7 +5,9 @@ import java.util.concurrent.TimeUnit
 
 class Timer {
     private var mTimer: CountDownTimer? = null
-    data class Units(val hours: Long = 0L, val minutes: Long = 0L, val seconds: Long = 0L) {
+    data class Units(
+        val leftTime: Long = 0, val hours: Long = 0L, val minutes: Long = 0L, val seconds: Long = 0L
+    ) {
         fun format(): String {
             val hours = hours.toString().padStart(2, '0')
             val minutes = minutes.toString().padStart(2, '0')
@@ -15,7 +17,7 @@ class Timer {
     }
 
     fun start(
-        time: Long, callback: (millisUntilFinished: Units) -> Unit
+        time: Long, callback: (millisUntilFinished: Units?) -> Unit
     ) {
         stop()
 
@@ -25,11 +27,12 @@ class Timer {
                 val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - hours * 60
                 val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60
 
-                callback.invoke(Units(hours, minutes, seconds))
+                callback.invoke(Units(millisUntilFinished, hours, minutes, seconds))
             }
 
             override fun onFinish() {
-                callback.invoke(Units())
+                mTimer = null
+                callback.invoke(null)
             }
         }.start()
     }
