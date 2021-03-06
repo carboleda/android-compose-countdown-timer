@@ -1,10 +1,21 @@
 package com.example.androiddevchallenge.ui
 
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -39,7 +50,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.androiddevchallenge.R
 import com.example.androiddevchallenge.extensions.formatToTimeUnits
 import com.example.androiddevchallenge.extensions.timeUnitsToMilliseconds
-import com.example.androiddevchallenge.ui.theme.darkblue700
+import com.example.androiddevchallenge.ui.theme.darkBlue700
 import com.example.androiddevchallenge.util.Timer
 import kotlin.math.round
 
@@ -88,9 +99,13 @@ fun SetupTimer(onStart: (time: Long) -> Unit) {
 
 @Composable
 fun InputTime(value: String, onValueChange: (value: String) -> Unit) {
-    Row(
+    Column(
         modifier = Modifier.fillMaxWidth(),
     ) {
+        Text(
+            text = stringResource(R.string.set_timer),
+            style = MaterialTheme.typography.h5.copy(color = MaterialTheme.colors.primary)
+        )
         BasicTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -105,7 +120,7 @@ fun InputTime(value: String, onValueChange: (value: String) -> Unit) {
             decorationBox = { innerTextField ->
                 Row(
                     Modifier
-                        .background(darkblue700, RoundedCornerShape(percent = 8))
+                        .background(darkBlue700, RoundedCornerShape(percent = 8))
                         .padding(8.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -172,7 +187,7 @@ fun StyledButton(text: Int, enabled: Boolean = true, onClick: () -> Unit) {
     ) {
         Text(
             text = stringResource(text),
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.h6.copy(color = Color.White),
         )
     }
 }

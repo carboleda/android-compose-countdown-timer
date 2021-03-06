@@ -9,7 +9,8 @@
       or implied. See the License for the specific language governing permissions and limitations under
       the License.
       -->
-    <string name="app_name">Ninja Timer</string>
+    <string name="app_name">Ninja Down Timer</string>
     <string name="stop">Stop</string>
     <string name="go">Go!</string>
+    <string name="set_timer">Set timer</string>
 </resources>
