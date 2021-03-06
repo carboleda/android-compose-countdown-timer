@@ -1,3 +1,18 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.androiddevchallenge.util
 
 import android.os.CountDownTimer
@@ -6,7 +21,10 @@ import java.util.concurrent.TimeUnit
 class Timer {
     private var mTimer: CountDownTimer? = null
     data class Units(
-        val leftTime: Long = 0, val hours: Long = 0L, val minutes: Long = 0L, val seconds: Long = 0L
+        val leftTime: Long = 0,
+        val hours: Long = 0L,
+        val minutes: Long = 0L,
+        val seconds: Long = 0L
     ) {
         fun format(): String {
             val hours = hours.toString().padStart(2, '0')
@@ -17,7 +35,8 @@ class Timer {
     }
 
     fun start(
-        time: Long, callback: (millisUntilFinished: Units?) -> Unit
+        time: Long,
+        callback: (millisUntilFinished: Units?) -> Unit
     ) {
         stop()
 
