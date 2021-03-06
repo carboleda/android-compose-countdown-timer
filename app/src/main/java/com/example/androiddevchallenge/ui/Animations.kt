@@ -1,6 +1,5 @@
 package com.example.androiddevchallenge.ui
 
-import android.content.Context
 import androidx.compose.animation.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment

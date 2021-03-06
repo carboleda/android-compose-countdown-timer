@@ -1,6 +1,5 @@
 package com.example.androiddevchallenge.ui
 
-import android.util.Log
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
@@ -59,34 +59,35 @@ fun DownCounter(model: TimerViewModel = viewModel()) {
         }
     }
 
-    DefaultVisibilityAnimation(visible = !isRunning) {
-        SetupArea(model::start)
-    }
-}
-
-@Composable
-fun SetupArea(onStart: (time: Long) -> Unit) {
-    var time by rememberSaveable { mutableStateOf("") }
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        SetTime(time) {
-            time = if(it.isDigitsOnly() && it.length <= 6) it else time
+    if(!isRunning) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            SetupTimer(model::start)
         }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        StyledButton(
-            text = R.string.go,
-            enabled = time.timeUnitsToMilliseconds() > 0,
-            onClick = { onStart(time.timeUnitsToMilliseconds()) }
-        )
     }
 }
 
 @Composable
-fun SetTime(value: String, onValueChange: (value: String) -> Unit) {
+fun SetupTimer(onStart: (time: Long) -> Unit) {
+    var time by rememberSaveable { mutableStateOf("") }
+    InputTime(time) {
+        time = if(it.isDigitsOnly() && it.length <= 6) it else time
+    }
+
+    Spacer(modifier = Modifier.height(10.dp))
+
+    StyledButton(
+        text = R.string.go,
+        enabled = time.timeUnitsToMilliseconds() > 0,
+        onClick = { onStart(time.timeUnitsToMilliseconds()) }
+    )
+}
+
+@Composable
+fun InputTime(value: String, onValueChange: (value: String) -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -97,14 +98,14 @@ fun SetTime(value: String, onValueChange: (value: String) -> Unit) {
             value = value,
             visualTransformation = TimeUnitTransformation(),
             onValueChange = { onValueChange(it) },
-            textStyle = TextStyle(fontSize = 25.sp, color = darkblue700, textAlign = TextAlign.Center),
+            textStyle = TextStyle(fontSize = 25.sp, color = Color.LightGray, textAlign = TextAlign.Center),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             singleLine = true,
             cursorBrush = SolidColor(Color.Transparent),
             decorationBox = { innerTextField ->
                 Row(
                     Modifier
-                        .background(Color.LightGray, RoundedCornerShape(percent = 8))
+                        .background(darkblue700, RoundedCornerShape(percent = 8))
                         .padding(8.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -124,7 +125,6 @@ fun Display(model: TimerViewModel, onStop: () -> Unit) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Log.d("Display", "${((leftTimeUnits.leftTime*100)/model.initialTime)}")
         Text(
             text = leftTimeUnits.format(),
             modifier = Modifier
@@ -157,10 +157,10 @@ fun ClockAnimation() {
     )
     val frameIndex = round(frame.value).toInt()
 
-    Log.d("Animation", "degrees: $frameIndex")
     Image(
         painter = painterResource(id = ninjaFrames[frameIndex]!!),
         contentDescription = null,
+        modifier = Modifier.scale(0.5f)
     )
 }
 

@@ -21,6 +21,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.AbsoluteCutCornerShape
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -28,6 +32,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -54,18 +61,24 @@ class MainActivity : AppCompatActivity() {
 // Start building your app here!
 @Composable
 fun MyApp() {
-    Surface(
-        color = MaterialTheme.colors.background,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-        ) {
-            Header()
+    Box {
+        Surface(
+            color = MaterialTheme.colors.background,
+            modifier = Modifier.fillMaxSize()
+        ) {}
 
-            DownCounter()
+        Surface(
+            color = Color.LightGray, modifier = Modifier.height(600.dp).fillMaxWidth(),
+            shape = RoundedCornerShape(40.dp).copy(topStart = ZeroCornerSize, topEnd = ZeroCornerSize)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+            ) {
+                Header()
+                DownCounter()
+            }
         }
     }
 }
@@ -80,11 +93,6 @@ fun Header() {
         ),
         fontStyle = FontStyle.Italic,
         modifier = Modifier.fillMaxWidth(),
-    )
-    Image(
-        painter = painterResource(id = R.drawable.ic_ninja_12),
-        contentDescription = null,
-        modifier = Modifier.scale(0.5f)
     )
 }
 
